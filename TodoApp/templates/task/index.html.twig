@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+    <h1>Liste des tâches</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Statut</th>
+                <th>Date de création</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.status ? 'Yes' : 'No' }}</td>
+                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                <div class ="centre">
+                    <a href="{{ path('app_task_show', {'id': task.id}) }}"><button type="submit">Voir la tâche</button></a>
+                    <a href="{{ path('app_task_edit', {'id': task.id}) }}"><button type="submit">Modifier</button></a>
+                    <a href="{{ path('task_mark_completed', { 'id': task.id }) }}"><button type="submit">Marqué comme complétée</button></a>
+                    {{ include('task/_delete_form.html.twig') }}
+                </div>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <form method="get" action="{{ path('app_task_index') }}">
+    <label for="status">Filtrer par statut:</label>
+    <select name="status" id="status">
+        <option value="">-- Tout afficher --</option>
+        <option value="1" {% if app.request.query.get('status') == '1' %}selected{% endif %}>Terminées</option>
+        <option value="0" {% if app.request.query.get('status') == '0' %}selected{% endif %}>Non terminées</option>
+    </select>
+    <button type="submit">Filtrer</button>
+</form>
+<br>
+<br>
+    <div class="centre">
+    <a href="{{ path('app_task_new') }}"><button id="nouveau" type="submit">Nouvelle tâche</button></a>
+    </div>
+{% endblock %}

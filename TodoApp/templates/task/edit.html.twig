@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la tâche{% endblock %}
+
+{% block body %}
+    <h1>Modifier la tâche</h1>
+
+    {{ include('task/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_task_index') }}"><button type="submit">Retour au menu</button></a>
+
+    {{ include('task/_delete_form.html.twig') }}
+{% endblock %}

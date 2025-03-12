@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tâche{% endblock %}
+
+{% block body %}
+    <h1>Tâche</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ task.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ task.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ task.description }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ task.status ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="centre">
+    <a href="{{ path('app_task_index') }}"><button type="submit">Retour au menu</button></a>
+
+    <a href="{{ path('app_task_edit', {'id': task.id}) }}"><button type="submit">Modifier</button></a>
+    {{ include('task/_delete_form.html.twig') }}
+    <div>
+{% endblock %}
